@@ -1,5 +1,5 @@
 function Main() {
-  return <div>Main</div>;
+  return <w3m-button />;
 }
 
 export default Main;

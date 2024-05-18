@@ -3,7 +3,7 @@ import ThemeToggle from "@/components/theme-toggle";
 
 function Header() {
   return (
-    <header className="absolute w-full z-30 border-b bg-gradient-to-b from-white/30 to-white/25 dark:from-gray-700/80 dark:to-gray-700/70 shadow-[0_1px_0_0_theme(colors.white/.2)] dark:shadow-none">
+    <header className="sticky top-0 left-0 backdrop-blur w-full z-30 border-b bg-gradient-to-b from-white/30 to-white/25 dark:from-gray-700/80 dark:to-gray-700/70 shadow-[0_1px_0_0_theme(colors.white/.2)] dark:shadow-none">
       <div className="px-4 sm:px-6">
         <div className="max-w-3xl mx-auto">
           <div className="relative flex items-center justify-between gap-x-2 h-[60px] px-3">
@@ -29,34 +29,23 @@ function Header() {
               </Link>
             </div>
             {/* Navigation links */}
-            <nav className="flex justify-center">
-              <ul className="flex items-center sm:gap-x-3 text-sm font-medium">
-                <li>
-                  <Link
-                    className="text-gray-800 dark:text-gray-200 rounded-lg hover:bg-indigo-100 dark:hover:bg-gray-800/30 py-1.5 px-3"
-                    href="/updates"
-                  >
-                    Updates
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="text-gray-800 dark:text-gray-200 rounded-lg hover:bg-indigo-100 dark:hover:bg-gray-800/30 transition-colors py-1.5 px-3"
-                    href="/faq"
-                  >
-                    FAQ
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="text-gray-800 dark:text-gray-200 rounded-lg hover:bg-indigo-100 dark:hover:bg-gray-800/30 transition-colors py-1.5 px-3"
-                    href="/contact"
-                  >
-                    Contact us
-                  </Link>
-                </li>
-              </ul>
-            </nav>
+            <Link href="/lookup" className="flex-[2]">
+              <div className="w-full flex items-center gap-2 border border-solid border-[#A5B4FC7A] py-1 px-4 rounded-lg">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6.66665 1.33333C3.72113 1.33333 1.33331 3.72115 1.33331 6.66667C1.33331 9.61219 3.72113 12 6.66665 12C7.89887 12 9.03349 11.5821 9.93653 10.8803L13.5273 14.4711C13.7877 14.7315 14.2098 14.7315 14.4701 14.4711C14.7305 14.2108 14.7305 13.7887 14.4701 13.5283L10.8795 9.93765C11.5818 9.03443 12 7.89939 12 6.66667C12 3.72115 9.61216 1.33333 6.66665 1.33333ZM2.66665 6.66667C2.66665 4.45753 4.45751 2.66667 6.66665 2.66667C8.87578 2.66667 10.6666 4.45753 10.6666 6.66667C10.6666 8.87581 8.87578 10.6667 6.66665 10.6667C4.45751 10.6667 2.66665 8.87581 2.66665 6.66667Z"
+                    fill="#9CA3AF"
+                  />
+                </svg>
+                <span className="text-[#9CA3AF]">Search</span>
+              </div>
+            </Link>
 
             {/* Light switch */}
             <ThemeToggle />

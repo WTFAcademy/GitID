@@ -13,14 +13,17 @@ export const useGithubLogin = () => {
     const left = (window.innerWidth / 2) - (width / 2);
     const top = (window.innerHeight / 2) - (height / 2);
 
-    window.addEventListener('message', (event: Event) => {
+    const handleCode = (event: Event) => {
       if (event.origin !== window.location.origin) return;
 
       const { code } = event.data;
       if (code) {
         setCode(code)
+        window.removeEventListener('message', handleCode)
       }
-    })
+    }
+
+    window.addEventListener('message', handleCode)
     window.open(
       `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}`,
       'GitHub Login',

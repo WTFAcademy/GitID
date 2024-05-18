@@ -6,7 +6,6 @@ import {GitID} from "./gitid.sol";
 
 contract Minter is Ownable, IGitIDMinter {
     using ECDSA for bytes32;
-
     GitID gitID;
     address public signer;
 
@@ -35,10 +34,9 @@ contract Minter is Ownable, IGitIDMinter {
 
         require(recoveredSigner == signer, "Invalid signature");
 
-        bytes32 label = keccak256(bytes(username));
-        uint256 tokenId = uint256(label);
+        uint256 tokenId = gitID.getTokenId(username);
 
-        gitID.register(tokenId, owner);
+        gitID.register(tokenId, username, owner);
 
         emit NameRegistered(username, owner, price);
     }

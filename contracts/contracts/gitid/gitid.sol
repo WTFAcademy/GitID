@@ -13,7 +13,7 @@ contract GitID is Ownable, ERC721, ERC721Enumerable  {
     string public baseURI;
 
     // A map of tokenId to name
-    mapping(uint256=>string) names;
+    mapping(uint256=>string) public names;
 
     // A map of addresses that are authorised to register and renew names.
     mapping(address=>bool) public minters;
@@ -66,8 +66,8 @@ contract GitID is Ownable, ERC721, ERC721Enumerable  {
      * @param id The token ID (keccak256 of the label).
      * @param owner The address that should own the registration.
      */
-    function register(uint256 id, address owner) external onlyMinter {
-        return _register(id, owner);
+    function register(uint256 id, string memory name, address owner) external onlyMinter {
+        return _register(id, name, owner);
     }
 
 
@@ -80,6 +80,11 @@ contract GitID is Ownable, ERC721, ERC721Enumerable  {
         emit NameRegistered(id, owner);
     }
 
+    function getTokenId(string memory username) public pure returns (uint256) {
+        bytes32 label = keccak256(bytes(username));
+        uint256 tokenId = uint256(label);
+        return tokenId;
+    }
 
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
         _requireMinted(tokenId);

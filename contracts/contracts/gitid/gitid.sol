@@ -72,9 +72,7 @@ contract GitID is Ownable, ERC721, ERC721Enumerable  {
 
 
     function _register(uint256 id, string memory name, address owner) internal {
-        if(_exists(id)) {
-            _burn(id);
-        }
+        require(!_exists(id), 'Already registered');
 
         _mint(owner, id);
         names[id] = name;

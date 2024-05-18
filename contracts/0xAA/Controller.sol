@@ -11,7 +11,7 @@ contract Controller is Ownable, Nonces {
     using MessageHashUtils for bytes32;
     using ECDSA for bytes32;
 
-    GitID private gitIdContract;
+    GitID private _gitIdContract;
     address private _signer;
     uint256 private _price;
     uint256 private immutable _cachedChainId;
@@ -19,7 +19,7 @@ contract Controller is Ownable, Nonces {
     event UserMinted(address indexed user, uint256 pricePaid, string username);
 
     constructor(address gitIdAddress_, address signer_, uint price_) Ownable (msg.sender){
-        gitIdContract = GitID(gitIdAddress_);
+        _gitIdContract = GitID(gitIdAddress_);
         _signer = signer_;
         _cachedChainId = block.chainid;
         _price = price_;
@@ -31,7 +31,7 @@ contract Controller is Ownable, Nonces {
     }
 
     // Mint一个新的GitID NFT
-    function mintGitID(address to, string memory username, bool isFree, uint256 deadline, bytes memory signature) external {
+    function mintGitID(address to, string memory username, bool isFree, uint256 deadline, bytes memory signature) external payable {
         // 检查signature时效性
         require(deadline >= block.timestamp, "Expired signature");
         // 验证后端的签名
@@ -42,9 +42,9 @@ contract Controller is Ownable, Nonces {
             require(msg.value >= _price, "Invalid price");
         }
         // 调用GitID合约的mint函数
-        gitIdContract.mint(to, username);
+        _gitIdContract.mint(to, username);
 
-        emit UserMinted(to, username, msg.value);
+        emit UserMinted(to, msg.value, username);
     }
 
     // 验证签名的内部函数
@@ -57,11 +57,6 @@ contract Controller is Ownable, Nonces {
         return _signer == ethSignedMessage.recover(signature);
     }
 
-    // 销毁一个GitID NFT
-    function burnGitID(string memory username) external {
-        gitIdContract.burn(username);
-    }
-    
     // 查询mint Price
     function getPrice() external view returns(uint256){
         return _price;

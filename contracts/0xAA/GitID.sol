@@ -9,7 +9,7 @@ contract GitID is ERC721, Ownable {
     mapping(address => string) private _addressToUsername;
 
     // Controller的地址
-    address private _controller;
+    address public controller;
 
     string private baseURI;
 
@@ -17,18 +17,17 @@ contract GitID is ERC721, Ownable {
     event Minted(address indexed to, uint256 indexed tokenId, string username);
     event Burned(address indexed from, uint256 indexed tokenId, string username);
 
-    constructor(address controller_) ERC721("GitID", "GITID") Ownable(msg.sender) {
-        setController(controller_);
+    constructor() ERC721("GitID", "GITID") Ownable(msg.sender) {
     }
 
     // 设置Controller的函数
-    function setController(address controller) public onlyOwner {
-        _controller = controller;
+    function setController(address controller_) public onlyOwner {
+        controller = controller_;
     }
 
     // 修饰符，仅允许Controller调用
     modifier isController() {
-        require(msg.sender == _controller, "Caller is not the controller");
+        require(msg.sender == controller, "Caller is not the controller");
         _;
     }
 
@@ -52,7 +51,7 @@ contract GitID is ERC721, Ownable {
         uint256 tokenId = getTokenIdByUsername(username);
         address from = ownerOf(tokenId);
         // 更新 from 的 GitHub Username
-        _addressToUsername[from] = "";
+        delete _addressToUsername[from];
         // 销毁 Git ID
         _burn(tokenId);
 
@@ -79,28 +78,44 @@ contract GitID is ERC721, Ownable {
     }
 
     // 通过用户名获取owner地址
-    function getOwnerByUsername(string memory username) public pure returns (uint256) {
-        tokenId = getTokenIdByUsername(username);
+    function getOwnerByUsername(string memory username) public view returns (address) {
+        uint256 tokenId = getTokenIdByUsername(username);
         return ownerOf(tokenId);
     }
 
     // 通过地址获取用户名
-    function getUsernameByAddress(address owner) public pure returns (string memory) {
+    function getUsernameByAddress(address owner) public view returns (string memory) {
         return _addressToUsername[owner];
     }
 
+    // 通过地址获取TokenID
+    function getTokenIdByAddress(address owner) public view returns (uint256) {
+        return getTokenIdByUsername(_addressToUsername[owner]);
+    }
+
     // 通过TokenID获取GitHub用户名
-    function getGitHubUsername(uint256 tokenId) public view returns (string memory) {
-        require(_ownerOf(tokenId) != address(0), "TokenID does not exist");
+    function getUsernameByTokenId(uint256 tokenId) public view returns (string memory) {
         address owner = ownerOf(tokenId);
         return _addressToUsername[owner];
     }
 
+    // 通过TokenID获取owner地址
+    function getOwnerByTokenId(uint256 tokenId) public view returns (address) {
+        return ownerOf(tokenId);
+    }
+
+    // 设置BaseURI
     function _baseURI() internal view override returns (string memory) {
         return baseURI;
     }
 
-    function setBaseURI(string memory baseURI_) external onlyOwner() {
+    function setBaseURI(string memory baseURI_) external onlyOwner {
         baseURI = baseURI_;
+    }
+
+    function tokenURI(uint256 tokenId) public view override returns (string memory) {
+        _requireOwned(tokenId);
+        string memory name = getUsernameByTokenId(tokenId);
+        return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI, name)) : "";
     }
 }

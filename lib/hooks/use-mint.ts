@@ -4,7 +4,7 @@ import mintAbi from '@/config/abi/mint'
 const useMint = () => {
     const { writeContracts } = useWriteContracts()
 
-    const mint = ()=>{
+    const mint = (address: string, tokenId: number, signature: string)=>{
         writeContracts({
             contracts: [
                 {
@@ -12,9 +12,9 @@ const useMint = () => {
                     abi: mintAbi,
                     functionName: 'mint',
                     args: [
-                        '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
-                        '1234',
-                        'xxxxxx'
+                        address,
+                        tokenId,
+                        signature
                     ],
                 },
             ],

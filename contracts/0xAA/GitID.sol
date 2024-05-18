@@ -73,9 +73,20 @@ contract GitID is ERC721, Ownable {
         return super._update(to, tokenId, auth);
     }
 
-    // 获取TokenID通过用户名
+    // 通过用户名获取TokenID
     function getTokenIdByUsername(string memory username) public pure returns (uint256) {
         return uint256(keccak256(abi.encodePacked(username)));
+    }
+
+    // 通过用户名获取owner地址
+    function getOwnerByUsername(string memory username) public pure returns (uint256) {
+        tokenId = getTokenIdByUsername(username);
+        return ownerOf(tokenId);
+    }
+
+    // 通过地址获取用户名
+    function getUsernameByAddress(address owner) public pure returns (string memory) {
+        return _addressToUsername[owner];
     }
 
     // 通过TokenID获取GitHub用户名

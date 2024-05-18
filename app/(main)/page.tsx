@@ -1,4 +1,4 @@
-import HomeHeader from "@/components/home- header";
+import HomeHeader from "@/components/home-header";
 
 function Main() {
   return (
@@ -14,6 +14,7 @@ function Main() {
             Soon
           </HomeHeader>
         </div>
+        <w3m-button />
       </div>
     </section>
   );

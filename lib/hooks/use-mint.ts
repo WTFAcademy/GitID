@@ -1,7 +1,7 @@
 import {useWriteContracts} from 'wagmi/experimental'
-import {useMutation} from "@tanstack/react-query";
-import {getDomainMintSignApi} from "@/lib/api/domain";
 import {parseAbi} from "viem";
+import {useAtomValue} from "jotai/react/useAtomValue";
+import {signInfoAtom} from "@/lib/store/mint";
 
 const abi = parseAbi([
     "function mintGitID(address to, string memory username, bool isFree, uint256 deadline, bytes memory signature) external"
@@ -43,28 +43,16 @@ export function useMint() {
         isError: isContractError,
         error: contractError
     } = useWriteContracts()
-    const {
-        mutateAsync: getDomainMintSign,
-        isPending: isMintSignLoading,
-        isError: isMintSignError,
-        error: mintSignError
-    } = useMutation({
-        mutationKey: ["getMintSign"],
-        onMutate: ({code, address}: { code: string, address: string }) => getDomainMintSignApi(code, address)
-    })
+    const signInfo = useAtomValue(signInfoAtom);
 
-    const mint = async (code: string, address: '0x${string}`') => {
-        const signInfo = await getDomainMintSign({code, address})
-        if (!signInfo) {
-            return
-        }
-
+    const mint = async () => {
         const {
             name,
             signature,
             isFree,
-            deadline
-        } = (signInfo || {}) as { name: string; isFree: boolean; signature: string; deadline: number }
+            deadline,
+            address
+        } = (signInfo || {}) as { name: string; isFree: boolean; signature: string; address: "0x${string}"; deadline: number }
         await writeContractsAsync({
             contracts: [
                 {
@@ -85,8 +73,8 @@ export function useMint() {
 
     return {
         mint,
-        isLoading: isContractLoading || isMintSignLoading,
-        isError: isContractError || isMintSignError,
-        error: contractError || mintSignError
+        isLoading: isContractLoading,
+        isError: isContractError,
+        error: contractError
     }
 }

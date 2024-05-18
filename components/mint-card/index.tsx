@@ -27,13 +27,13 @@ function MintCard() {
 
     return (
         <div className="bg-[#6366F129] p-3 rounded mx-auto flex" style={{width: "max-content"}}>
-            <ConnectSection />
-            {isConnectedWallet && (
-                <RightWrap>
-                    {!isMinted && <MintSection/>}
-                    {isMinted && <ScoreSection/>}
-                </RightWrap>
-            )}
+          <ConnectSection />
+          {/*{isConnectedWallet && (*/}
+          {/*  <RightWrap>*/}
+          {/*    {!isMinted && <MintSection/>}*/}
+          {/*    {isMinted && <ScoreSection/>}*/}
+          {/*  </RightWrap>*/}
+          {/*)}*/}
         </div>
     );
 }

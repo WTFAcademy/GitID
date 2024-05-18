@@ -7,7 +7,7 @@ import ScoreSection from "./score-section";
 import MintSection from "./mint-section";
 import {useAccount} from "wagmi";
 import {githubUserAtom} from "@/lib/store/mint";
-import {useAtomValue} from "jotai/react/useAtomValue";
+import {useAtomValue} from "jotai";
 
 const RightWrap = ({children}: { children: ReactNode }) => {
     return (

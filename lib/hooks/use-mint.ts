@@ -1,6 +1,6 @@
 import {useWriteContracts} from 'wagmi/experimental'
 import {parseAbi} from "viem";
-import {useAtomValue} from "jotai/react/useAtomValue";
+import {useAtomValue} from "jotai";
 import {signInfoAtom} from "@/lib/store/mint";
 
 const abi = parseAbi([

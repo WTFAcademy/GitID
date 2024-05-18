@@ -1,4 +1,4 @@
-import Header from "@/components/header";
+import Header from "@/components/page-header";
 import MintCard from "../../components/mint-card";
 
 function Main() {

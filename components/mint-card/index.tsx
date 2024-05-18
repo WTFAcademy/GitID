@@ -3,10 +3,11 @@
 import {ReactNode, useState} from "react";
 
 import ConnectSection from "@/components/mint-card/connect-section";
-import {Skeleton} from "@/components/ui/skeleton";
 import ScoreSection from "./score-section";
 import MintSection from "./mint-section";
 import {useAccount} from "wagmi";
+import {githubUserAtom} from "@/lib/store/mint";
+import {useAtomValue} from "jotai/react/useAtomValue";
 
 const RightWrap = ({children}: { children: ReactNode }) => {
     return (
@@ -18,13 +19,15 @@ const RightWrap = ({children}: { children: ReactNode }) => {
 };
 
 function MintCard() {
-    const [isConnectGithub, setIsConnectGithub] = useState(false);
+    const githubUser = useAtomValue(githubUserAtom);
     const {isConnected: isConnectedWallet} = useAccount();
     const [isMinted, setIsMinted] = useState(false);
 
+    console.log(githubUser);
+
     return (
         <div className="bg-[#6366F129] p-3 rounded mx-auto flex" style={{width: "max-content"}}>
-            <ConnectSection updateConnectGithub={setIsConnectGithub}/>
+            <ConnectSection />
             {isConnectedWallet && (
                 <RightWrap>
                     {!isMinted && <MintSection/>}

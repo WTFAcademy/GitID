@@ -1,5 +1,5 @@
 import Header from "@/components/header";
-import MintCard from "@/app/(main)/components/mint-card";
+import MintCard from "../../components/mint-card";
 
 function Main() {
   return (

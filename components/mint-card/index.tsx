@@ -2,7 +2,7 @@
 
 import {ReactNode, useState} from "react";
 
-import ConnectSection from "@/app/(main)/components/mint-card/connect-section";
+import ConnectSection from "@/components/mint-card/connect-section";
 import {Skeleton} from "@/components/ui/skeleton";
 import ScoreSection from "./score-section";
 import MintSection from "./mint-section";

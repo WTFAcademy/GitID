@@ -1,4 +1,6 @@
 import HomeHeader from "@/components/home-header";
+import Introduce from "@/app/(main)/components/introduce";
+import HomeCard from "@/app/(main)/components/mint-card";
 
 function Main() {
   return (
@@ -13,8 +15,10 @@ function Main() {
             Waitlist v1 <span className="text-gray-300 mx-1">·</span> Coming
             Soon
           </HomeHeader>
+          <HomeCard />
+          <w3m-button />
+          <Introduce />
         </div>
-        <w3m-button />
       </div>
     </section>
   );

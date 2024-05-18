@@ -4,6 +4,7 @@ interface IGitIDMinter {
     function register(
         string calldata username,
         bytes calldata signature,
-        address
+        uint256 deadline,
+        address owner
     ) external payable;
 }

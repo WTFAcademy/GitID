@@ -25,11 +25,12 @@ contract Minter is Ownable, IGitIDMinter {
     function register(
         string calldata username,
         bytes calldata signature,
+        uint256 deadline,
         address owner
     ) public payable override{
+        require(block.timestamp <= deadline, "Signature expired");
         uint256 price = msg.value;
-
-        bytes32 messageHash = getMessageHash(username, price);
+        bytes32 messageHash = getMessageHash(username, price, deadline, owner);
         address recoveredSigner = messageHash.toEthSignedMessageHash().recover(signature);
 
         require(recoveredSigner == signer, "Invalid signature");
@@ -41,8 +42,13 @@ contract Minter is Ownable, IGitIDMinter {
         emit NameRegistered(username, owner, price);
     }
 
-    function getMessageHash(string memory username, uint256 price) public pure returns (bytes32) {
-        return keccak256(abi.encodePacked(username, price));
+    function getMessageHash(
+        string memory username,
+        uint256 price,
+        uint256 deadline,
+        address owner
+    ) public pure returns (bytes32) {
+        return keccak256(abi.encodePacked(username, price, deadline, owner));
     }
 
     function withdraw() public onlyOwner {

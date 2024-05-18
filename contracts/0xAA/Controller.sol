@@ -44,7 +44,7 @@ contract Controller is Ownable, Nonces {
         // 调用GitID合约的mint函数
         _gitIdContract.mint(to, username);
 
-        emit UserMinted(to, username, msg.value);
+        emit UserMinted(to, msg.value, username);
     }
 
     // 验证签名的内部函数

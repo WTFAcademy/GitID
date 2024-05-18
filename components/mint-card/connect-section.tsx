@@ -3,7 +3,7 @@ import {useAtom} from "jotai/react/useAtom";
 import {githubUserAtom, signInfoAtom} from "@/lib/store/mint";
 import {useMutation} from "@tanstack/react-query";
 import {getDomainMintSignApi} from "@/lib/api/domain";
-import {useSetAtom} from "jotai/react/useSetAtom";
+import {useSetAtom} from "jotai";
 
 function ConnectSection() {
     const [githubUser, setGithubUser] = useAtom(githubUserAtom)

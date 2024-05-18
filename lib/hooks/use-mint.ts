@@ -1,7 +1,7 @@
 import { useWriteContracts } from 'wagmi/experimental'
 import mintAbi from '@/config/abi/mint'
 
-function App() {
+const useMint = () => {
     const { writeContracts } = useWriteContracts()
 
     const mint = ()=>{

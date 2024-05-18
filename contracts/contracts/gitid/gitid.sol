@@ -8,6 +8,7 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract GitID is Ownable, ERC721, ERC721Enumerable  {
 
+    // basename '.gitid'
     string public baseName;
     string public baseURI;
 
@@ -21,6 +22,7 @@ contract GitID is Ownable, ERC721, ERC721Enumerable  {
     event MinterAdded(address indexed minter);
     event MinterRemoved(address indexed minter);
     event NameRegistered(uint256 indexed id, address indexed owner);
+
 
     constructor(string memory _name, string memory _symbol, string memory _baseName) ERC721(_name, _symbol) {
         baseName = _baseName;

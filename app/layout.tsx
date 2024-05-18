@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-
 import { headers } from 'next/headers'
-
+import { Toaster } from "@/components/ui/toaster"
 import { cookieToInitialState } from 'wagmi'
-
 import Web3ModalProvider from '@/components/context/web3modal'
 import { config } from "@/config/chain";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +24,10 @@ export default function RootLayout({
     return (
         <html lang="en">
                 <body className={inter.className}>
-                    <Web3ModalProvider initialState={initialState}>{children}</Web3ModalProvider>
+                    <Web3ModalProvider initialState={initialState}>
+                        {children}
+                        <Toaster />
+                    </Web3ModalProvider>
                 </body>
         </html>
     );

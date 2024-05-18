@@ -109,7 +109,7 @@ contract GitID is ERC721, Ownable {
         return baseURI;
     }
 
-    function setBaseURI(string memory baseURI_) external onlyOwner() {
+    function setBaseURI(string memory baseURI_) external onlyOwner {
         baseURI = baseURI_;
     }
 

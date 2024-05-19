@@ -14,13 +14,13 @@ export const Profile = () => {
         <div className="flex-1 flex flex-col gap-4">
           <AvatarInfo
             title="GitHub"
-            avatar={githubUser.avatar_url}
-            name={`@${githubUser.user_name}`}
-            account={`${githubUser.user_name}.git`}
+            avatar={githubUser?.avatar_url}
+            name={`@${githubUser?.user_name}`}
+            account={`${githubUser?.user_name}.git`}
           />
           <AvatarInfo
             title="Evm Address"
-            avatar={githubUser.avatar_url}
+            avatar={githubUser?.avatar_url}
             name={truncate(address!, 10)}
           />
         </div>

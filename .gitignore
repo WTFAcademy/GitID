@@ -44,3 +44,11 @@ next-env.d.ts
 .idea
 bun.lockb
 artifacts
+
+
+# Ignore Foundry environment variables file
+/contracts/foundry-project/.env
+
+# Ignore Foundry cache and lib
+/contracts/foundry-project/cache
+/contracts/foundry-project/lib

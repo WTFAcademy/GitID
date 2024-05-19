@@ -7,6 +7,7 @@ import MintSection from "./mint-section";
 import {useAccount} from "wagmi";
 import {githubUserAtom} from "@/lib/store/mint";
 import {useAtomValue} from "jotai";
+import ScoreSection from "@/components/mint-card/score-section";
 
 const RightWrap = ({children}: { children: ReactNode }) => {
     return (
@@ -24,15 +25,12 @@ function MintCard() {
     return (
         <div className="bg-[#6366F129] p-3 rounded flex">
             <ConnectSection />
-            <RightWrap>
-                <MintSection />
-            </RightWrap>
-            {/*{isConnectedWallet && (*/}
-            {/*    <RightWrap>*/}
-            {/*        {!isMinted && <MintSection/>}*/}
-            {/*        {isMinted && <ScoreSection/>}*/}
-            {/*    </RightWrap>*/}
-            {/*)}*/}
+            {isConnectedWallet && (
+                <RightWrap>
+                    {!isMinted && <MintSection/>}
+                    {isMinted && <ScoreSection/>}
+                </RightWrap>
+            )}
         </div>
     );
 }

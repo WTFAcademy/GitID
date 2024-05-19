@@ -1,10 +1,11 @@
 import {parseAbi} from "viem";
 import {useAtomValue} from "jotai";
 import {signInfoAtom} from "@/lib/store/mint";
-import {useWriteContract} from "wagmi";
+import {useAccount, useReadContract, useWriteContract} from "wagmi";
 
 const abi = parseAbi([
-    "function mintGitID(address to, string memory username, bool isFree, uint256 deadline, bytes memory signature) external payable"
+    "function mintGitID(address to, string memory username, bool isFree, uint256 deadline, bytes memory signature) external payable",
+    "function nonces(address) external view returns (uint256)"
 ])
 
 export function useMint() {
@@ -14,7 +15,8 @@ export function useMint() {
         isError: isContractError,
         error: contractError
     } = useWriteContract()
-    const signInfo = useAtomValue(signInfoAtom);
+    const signInfo = useAtomValue<any>(signInfoAtom);
+    const {address} = useAccount()
 
     const mint = async () => {
         const {
@@ -38,8 +40,18 @@ export function useMint() {
         })
     }
 
+    const {
+        data: nonce
+    } = useReadContract({
+        abi,
+        address: "0xfA2d668585972eE40321dfbe73775C4823e9a123",
+        functionName: 'nonces',
+        args: [address!]
+    })
+
     return {
         mint,
+        nonce,
         isLoading: isContractLoading,
         isError: isContractError,
         // @ts-ignore

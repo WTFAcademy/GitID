@@ -1,9 +1,7 @@
 import {Button} from "@/components/ui/button";
-import {useChainId} from "wagmi";
 import {useMint} from "@/lib/hooks/use-mint";
 
 const MintSection = () => {
-    const chainId = useChainId();
     const {
         mint,
         isLoading,

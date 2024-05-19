@@ -1,5 +1,7 @@
 "use client";
 
+import React, { useState, useEffect } from 'react';
+
 type StatsProps = {
     username: string;
     stars: number,
@@ -21,7 +23,7 @@ function Stats({
     pr_count,
     contributed_repo_count,
     issues_count,
-    rank,
+    rank = 0,
 }: StatsProps) {
     const stats = [
         // {
@@ -54,6 +56,20 @@ function Stats({
         },
     ];
 
+    const [addClass, setAddClass] = useState(false);
+
+    useEffect(() => {
+
+        const ringOffset = (276.46/100 * (100 - rank)) * -1;
+        
+        document.documentElement.style.setProperty('--ring-offset', `${ringOffset}`);
+
+        const timeout = setTimeout(() => {
+            setAddClass(true);
+        }, 100);
+        
+    }, []);
+
     return (
         <div className="w-[326px] h-auto rounded-lg border border-solid border-[#A5B4FC] border-opacity-[48]">
             <div className="p-4">
@@ -81,21 +97,20 @@ function Stats({
                             <circle
                                 className="ring-track"
                                 fill="transparent"
-                                stroke-dashoffset="270"
-                                stroke-width="6px"
+                                strokeDashoffset="270"
+                                strokeWidth="6px"
                                 stroke="#9c9c9c30"
                                 cx="50"
                                 cy="50"
                                 r="44"
                             />
                             <circle
-                                className="ring-dash"
+                                className={addClass ? "ring-dash active" : "ring-dash"}
                                 fill="transparent"
-                                stroke-width="6px"
-                                stroke-linecap="round"
+                                strokeWidth="6px"
+                                strokeLinecap="round"
                                 stroke="#6366F1"
-                                stroke-dashoffset="140"
-                                stroke-dasharray="276.460 276.460"
+                                strokeDasharray="276.460 276.460"
                                 cx="50"
                                 cy="50"
                                 r="44"
@@ -110,5 +125,6 @@ function Stats({
         </div>
     );
 }
+
 
 export default Stats;

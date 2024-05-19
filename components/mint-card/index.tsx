@@ -26,6 +26,7 @@ function MintCard() {
     const {data: user, isFetching} = useQuery({
         queryKey: ['getUserInfo', githubUser?.['user_name']],
         queryFn: () => getPersionalInfo(githubUser?.['user_name']).then(res => res.data),
+        enabled: !!githubUser?.['user_name']
     })
     const {address} = useAccount()
     const isMinted = !!user?.git_id_mint_info

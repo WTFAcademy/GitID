@@ -62,7 +62,7 @@ function PersonalCard({ personalInfo }: TProps) {
         />
       </div>
       <div className="flex-1">
-        <Stats />
+        <Stats {...personalInfo} />
       </div>
     </PersonalWrap>
   );

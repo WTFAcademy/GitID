@@ -14,7 +14,8 @@ function SearchInput({ setSearchValue, handleSearch, searchValue }: TProps) {
         placeholder="GitHub Name"
         className="w-full bg-[#FFFFFFB8]"
         value={searchValue}
-        onChange={(e) => setSearchValue(e.target.name)}
+        autoFocus
+        onChange={(e) => setSearchValue(e.target.value)}
       />
       <Button onClick={handleSearch}>Look up</Button>
     </div>

@@ -45,9 +45,11 @@ const MintSuccessful = () => {
         <>
             <p>🎉</p>
             <h2 className="text-[32px] font-bold mb-6">tank.git</h2>
-            <div className="">
-                <h2></h2>
-                <Link href="/">0xbfa9953f9998cceb5a97c681b12c239aee6a35489f500b9a424c0dc137d2e846</Link>
+            <div className=" relative flex-col text-center w-full p-4 border border-solid border-[#A5B4FC7A] rounded-lg">
+                <h2 className="text-[#6B7280CC] text-xs mb-1">Transaction</h2>
+                <Link href="/" className="text-[#4F46E5] w-full inline-flex break-words">
+                    <span className=" inline-flex">0xbfa9953f9998cceb5a97c681b12c239aee6a35489f500b9a424c0dc137d2e846</span>
+                </Link>
             </div>
         </>
     )

@@ -8,6 +8,8 @@ import {useAccount} from "wagmi";
 import {githubUserAtom} from "@/lib/store/mint";
 import {useAtomValue} from "jotai";
 import ScoreSection from "@/components/mint-card/score-section";
+import {useQuery} from "@tanstack/react-query";
+import {getPersionalInfo} from "@/lib/api/domain";
 
 const RightWrap = ({children}: { children: ReactNode }) => {
     return (
@@ -20,7 +22,11 @@ const RightWrap = ({children}: { children: ReactNode }) => {
 function MintCard() {
     const githubUser = useAtomValue(githubUserAtom);
     const {isConnected: isConnectedWallet} = useAccount();
-    const [isMinted, setIsMinted] = useState(false);
+    const {data: user} = useQuery({
+        queryKey: ['getUserInfo', githubUser?.['user_name']],
+        queryFn: () => getPersionalInfo(githubUser?.['user_name']).then(res => res.data),
+    })
+    const isMinted = !!user?.git_id_mint_info
 
     return (
         <div className="bg-[#6366F129] p-3 rounded flex">

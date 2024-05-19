@@ -8,7 +8,7 @@ export const Profile = () => {
   const githubUser = useAtomValue(githubUserAtom);
   const {address} = useAccount()
   return (
-    <div className="p-5 text-left">
+    <div className="text-left">
       <h2 className="font-bold text-2xl">Git.ID</h2>
       <div className="flex mt-5 flex-col md:flex-row gap-5 items-center pb-5">
         <div className="flex-1 flex flex-col gap-4">

@@ -16,7 +16,7 @@ const metadata = {
 }
 
 // Create wagmiConfig
-const chains = [scroll, scrollSepolia] as const
+const chains = [sepolia] as const
 export const config = defaultWagmiConfig({
     chains,
     projectId,

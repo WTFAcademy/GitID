@@ -9,7 +9,7 @@ contract GitID is ERC721, Ownable {
     mapping(address => string) private _addressToUsername;
 
     // Controller的地址
-    address private _controller;
+    address public controller;
 
     string private baseURI;
 
@@ -21,13 +21,13 @@ contract GitID is ERC721, Ownable {
     }
 
     // 设置Controller的函数
-    function setController(address controller) public onlyOwner {
-        _controller = controller;
+    function setController(address controller_) public onlyOwner {
+        controller = controller_;
     }
 
     // 修饰符，仅允许Controller调用
     modifier isController() {
-        require(msg.sender == _controller, "Caller is not the controller");
+        require(msg.sender == controller, "Caller is not the controller");
         _;
     }
 
@@ -109,7 +109,7 @@ contract GitID is ERC721, Ownable {
         return baseURI;
     }
 
-    function setBaseURI(string memory baseURI_) external onlyOwner() {
+    function setBaseURI(string memory baseURI_) external onlyOwner {
         baseURI = baseURI_;
     }
 

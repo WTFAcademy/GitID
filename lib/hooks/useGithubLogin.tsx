@@ -13,7 +13,7 @@ export const useGithubLogin = () => {
     const left = (window.innerWidth / 2) - (width / 2);
     const top = (window.innerHeight / 2) - (height / 2);
 
-    const handleCode = (event: Event) => {
+    const handleCode = (event: any) => {
       if (event.origin !== window.location.origin) return;
 
       const { code } = event.data;

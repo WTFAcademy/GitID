@@ -1,7 +1,7 @@
 import {parseAbi} from "viem";
 import {useAtomValue} from "jotai";
 import {signInfoAtom} from "@/lib/store/mint";
-import {useAccount, useReadContract, useWriteContract} from "wagmi";
+import {useAccount, useReadContract, useWaitForTransactionReceipt, useWriteContract} from "wagmi";
 
 const abi = parseAbi([
     "function mintGitID(address to, string memory username, bool isFree, uint256 deadline, bytes memory signature) external payable",
@@ -10,19 +10,25 @@ const abi = parseAbi([
 
 export function useMint() {
     const {
+        data: hash,
         writeContract,
         isPending: isContractLoading,
         isError: isContractError,
         error: contractError
     } = useWriteContract()
     const signInfo = useAtomValue<any>(signInfoAtom);
-    const {address} = useAccount()
+    const {address} = useAccount();
+
+    const {data, isLoading, isError, error, isSuccess} =
+        useWaitForTransactionReceipt({
+            hash
+        })
 
     const mint = async () => {
         const {
             name,
-            signature,
-            isFree,
+            sig,
+            is_free,
             deadline,
             address,
         } = (signInfo || {}) as any
@@ -33,9 +39,9 @@ export function useMint() {
             args: [
                 address,
                 name,
-                isFree,
+                is_free,
                 deadline,
-                signature
+                sig
             ]
         })
     }
@@ -52,9 +58,11 @@ export function useMint() {
     return {
         mint,
         nonce,
-        isLoading: isContractLoading,
-        isError: isContractError,
+        isLoading: isContractLoading || isLoading,
+        isError: isContractError || isError,
         // @ts-ignore
-        error: contractError?.shortMessage || "Unknown error"
+        error: contractError?.shortMessage || error?.shortMessage || "Unknown error",
+        hash,
+        isSuccess
     }
 }

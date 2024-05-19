@@ -6,7 +6,7 @@ export const useGithubLogin = () => {
   const login = useCallback(() => {
     const clientId = process.env.NEXT_PUBLIC_OAUTH_CLIENT_ID
     const scope = process.env.NEXT_PUBLIC_OAUTH_SCOPE
-    const redirectUri = `${process.env.NEXT_PUBLIC_SITE_URL}/code`
+    const redirectUri = `${window.location.origin}/code`
 
     const width = 600;
     const height = 600;

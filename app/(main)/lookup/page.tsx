@@ -7,7 +7,7 @@ import { getPersionalInfo } from "@/lib/api/domain";
 import { TUser } from "@/types";
 
 function Lookup() {
-  const [searchValue, setSearchValue] = useState("smithereens");
+  const [searchValue, setSearchValue] = useState("");
   const [personalInfo, setPersonalInfo] = useState<TUser | null>(null);
 
   const handleSearch = async () => {
@@ -17,7 +17,7 @@ function Lookup() {
   };
 
   return (
-    <section className="text-center px-4 sm:px-6 max-w-3xl mx-auto">
+    <section className="text-center px-4 sm:px-6 max-w-3xl mx-auto w-full">
       <h1 className="text-5xl mt-28 font-bold">Look up Git.ID</h1>
       <SearchInput
         searchValue={searchValue}

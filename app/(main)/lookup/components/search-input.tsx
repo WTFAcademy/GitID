@@ -11,8 +11,8 @@ function SearchInput({ setSearchValue, handleSearch, searchValue }: TProps) {
   return (
     <div className="w-full my-12 flex items-center gap-3">
       <Input
-        placeholder="wtf.git"
-        className="w-full"
+        placeholder="GitHub Name"
+        className="w-full bg-[#FFFFFFB8]"
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.name)}
       />

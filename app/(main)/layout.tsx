@@ -4,7 +4,7 @@ import Header from "@/components/header";
 
 function MainLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col justify-between min-h-screen">
       <Header />
       <BgShapes />
       {children}

@@ -7,7 +7,6 @@ interface HomeHeaderProps {
 
 export default function Header({
   className,
-  children,
 }: HomeHeaderProps) {
   return (
     <div className={`max-w-3xl mx-auto ${className || ""}`}>
@@ -20,7 +19,6 @@ export default function Header({
               aria-hidden="true"
             />
             <span className="relative text-gray-800 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-b dark:from-indigo-500 dark:to-indigo-50">
-              {children}
             </span>
           </div>
         </div>

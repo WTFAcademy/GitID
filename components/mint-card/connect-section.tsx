@@ -9,6 +9,7 @@ import {useGithubLogin} from '@/lib/hooks/useGithubLogin'
 import {toast} from "sonner";
 import {useMint} from "@/lib/hooks/use-mint";
 import {useEffect} from "react";
+import { Profile } from '@/components/mint-card/profile'
 
 function ConnectSection() {
     const [githubUser, setGithubUser] = useAtom(githubUserAtom)
@@ -31,6 +32,7 @@ function ConnectSection() {
         mutationFn: (data: TDomainRequestBody) => getDomainMintSignApi(data),
         onSuccess: (data) => {
             console.log(data)
+            setGithubUser(data.data.user_info)
         },
         onError: (error) => {
             toast.error(error?.message)
@@ -53,7 +55,8 @@ function ConnectSection() {
 
     return (
         <div className="flex-1 px-5 py-3 flex flex-col">
-            {address && (
+            {code ? <Profile /> : ''}
+            {address && !code && (
                 <>
                     <Button className="w-[200px] mt-2 mx-auto" onClick={() => login()}>Github Login</Button>
                     <a className="flex items-center justify-center mt-4 text-xs text-content-muted" href="#"

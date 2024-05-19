@@ -12,7 +12,7 @@ function Lookup() {
 
   const handleSearch = async () => {
     const { data } = await getPersionalInfo(searchValue);
-    console.log(data);
+    // console.log(data);
     setPersonalInfo(data);
   };
 

@@ -10,8 +10,7 @@ export default function Header() {
             <div className="flex-1 h-full flex items-center">
               <Link href="/" className="inline-block">
                 <svg
-                  width="131"
-                  height="39"
+                  height="24"
                   viewBox="0 0 131 39"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"

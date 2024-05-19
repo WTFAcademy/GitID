@@ -1,16 +1,12 @@
 "use client";
 
-import {ReactNode, useState} from "react";
-
+import {ReactNode} from "react";
 import ConnectSection from "@/components/mint-card/connect-section";
 import MintSection from "./mint-section";
 import {useAccount} from "wagmi";
-import {githubUserAtom} from "@/lib/store/mint";
-import {useAtomValue} from "jotai";
 import ScoreSection from "@/components/mint-card/score-section";
-import {useQuery} from "@tanstack/react-query";
-import {getPersionalInfo} from "@/lib/api/domain";
 import {Icons} from "@/components/icons";
+import useUser from "@/lib/hooks/use-user";
 
 const RightWrap = ({children}: { children: ReactNode }) => {
     return (
@@ -21,28 +17,34 @@ const RightWrap = ({children}: { children: ReactNode }) => {
 };
 
 function MintCard() {
-    const githubUser = useAtomValue(githubUserAtom);
     const {isConnected: isConnectedWallet} = useAccount();
-    const {data: user, isFetching} = useQuery({
-        queryKey: ['getUserInfo', githubUser?.['user_name']],
-        queryFn: () => getPersionalInfo(githubUser?.['user_name']).then(res => res.data),
-        enabled: !!githubUser?.['user_name']
-    })
+    const {user, isFetching} = useUser();
     const {address} = useAccount()
     const isMinted = !!user?.git_id_mint_info
     const isErrorWallet = user?.git_id_mint_info?.To.toLowerCase() !== address?.toLowerCase()
+
+    const rightContext = () => {
+        if (isFetching) {
+            return (
+                    <div className="h-[200px] flex flex-col items-center justify-center">
+                        <Icons.loading className="animate-spin w-6 h-6"/>
+                    </div>
+            )
+        }
+
+        if (isMinted && !isErrorWallet) {
+            return <ScoreSection user={user} />
+        }
+
+        return <MintSection />
+    }
 
     return (
         <div className="bg-[#6366F129] p-3 rounded flex">
             <ConnectSection/>
             {isConnectedWallet && (
                 <RightWrap>
-                    {isMinted && !isErrorWallet ? <ScoreSection/> : <MintSection/>}
-                    {/*{isFetching && (*/}
-                    {/*    <div className="h-[200px] flex flex-col items-center justify-center">*/}
-                    {/*        <Icons.loading className="animate-spin w-6 h-6" />*/}
-                    {/*    </div>*/}
-                    {/*)}*/}
+                    {rightContext()}
                 </RightWrap>
             )}
         </div>

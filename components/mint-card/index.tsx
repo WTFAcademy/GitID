@@ -10,6 +10,7 @@ import {useAtomValue} from "jotai";
 import ScoreSection from "@/components/mint-card/score-section";
 import {useQuery} from "@tanstack/react-query";
 import {getPersionalInfo} from "@/lib/api/domain";
+import {Icons} from "@/components/icons";
 
 const RightWrap = ({children}: { children: ReactNode }) => {
     return (
@@ -22,19 +23,25 @@ const RightWrap = ({children}: { children: ReactNode }) => {
 function MintCard() {
     const githubUser = useAtomValue(githubUserAtom);
     const {isConnected: isConnectedWallet} = useAccount();
-    const {data: user} = useQuery({
+    const {data: user, isFetching} = useQuery({
         queryKey: ['getUserInfo', githubUser?.['user_name']],
         queryFn: () => getPersionalInfo(githubUser?.['user_name']).then(res => res.data),
     })
+    const {address} = useAccount()
     const isMinted = !!user?.git_id_mint_info
+    const isErrorWallet = user?.git_id_mint_info?.To.toLowerCase() !== address?.toLowerCase()
 
     return (
         <div className="bg-[#6366F129] p-3 rounded flex">
-            <ConnectSection />
+            <ConnectSection/>
             {isConnectedWallet && (
                 <RightWrap>
-                    {!isMinted && <MintSection/>}
-                    {isMinted && <ScoreSection/>}
+                    {isMinted && !isErrorWallet ? <ScoreSection/> : <MintSection/>}
+                    {/*{isFetching && (*/}
+                    {/*    <div className="h-[200px] flex flex-col items-center justify-center">*/}
+                    {/*        <Icons.loading className="animate-spin w-6 h-6" />*/}
+                    {/*    </div>*/}
+                    {/*)}*/}
                 </RightWrap>
             )}
         </div>

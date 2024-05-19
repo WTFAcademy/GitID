@@ -19,13 +19,13 @@ const MintSection = () => {
     if (isSuccess) {
         return (
             <div className="w-full flex flex-col items-center">
-                <h2 className="text-[32px] font-bold mb-6">Minted</h2>
-                <div className="flex flex-col items-center space-y-[10px] mb-[56px]">
-                    <span className="text-gray-400 text-xs font-bold">Transaction Hash</span>
-                    <Link
-                        href={`https://etherscan.io/tx/${hash}`}
-                        className="py-2 px-6 rounded-lg bg-white shadow text-sm w-[200px] text-center"
-                    >{truncate(hash!, 10)}</Link>
+                <p className="text-[50px] mb-4 leading-none">🎉</p>
+                <h2 className="text-[32px] font-bold mb-6">{signInfo?.['name']}.git</h2>
+                <div className="relative flex-col text-center w-full p-4 border border-solid border-[#A5B4FC7A] rounded-lg">
+                    <h2 className="text-[#6B7280CC] text-xs mb-1">Transaction</h2>
+                    <Link href={`https://etherscan.io/tx/${hash}`} className="text-[#4F46E5] w-full text-center">
+                        {truncate(hash!, 10)}
+                    </Link>
                 </div>
             </div>
         )
@@ -67,25 +67,5 @@ const MintSection = () => {
         </>
     )
 };
-
-
-const MintSuccessful = () => {
-    const {
-        hash,
-    } = useMint();
-
-    return (
-        <>
-            <p className="text-[50px] mb-4 leading-none">🎉</p>
-            <h2 className="text-[32px] font-bold mb-6">tank.git</h2>
-            <div className=" relative flex-col text-center w-full p-4 border border-solid border-[#A5B4FC7A] rounded-lg">
-                <h2 className="text-[#6B7280CC] text-xs mb-1">Transaction</h2>
-                <Link href={`https://etherscan.io/tx/${hash}`} className="text-[#4F46E5] w-full text-center">
-                    {truncate(hash!, 10)}
-                </Link>
-            </div>
-        </>
-    )
-}
 
 export default MintSection;

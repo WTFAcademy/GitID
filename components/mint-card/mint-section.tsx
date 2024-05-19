@@ -1,5 +1,6 @@
 import {Button} from "@/components/ui/button";
 import {useMint} from "@/lib/hooks/use-mint";
+import Link from "next/link";
 
 const MintSection = () => {
     const {
@@ -37,5 +38,19 @@ const MintSection = () => {
         </>
     )
 };
+
+
+const MintSuccessful = () => {
+    return (
+        <>
+            <p>🎉</p>
+            <h2 className="text-[32px] font-bold mb-6">tank.git</h2>
+            <div className="">
+                <h2></h2>
+                <Link href="/">0xbfa9953f9998cceb5a97c681b12c239aee6a35489f500b9a424c0dc137d2e846</Link>
+            </div>
+        </>
+    )
+}
 
 export default MintSection;

@@ -9,6 +9,7 @@ import {useGithubLogin} from '@/lib/hooks/useGithubLogin'
 import {toast} from "sonner";
 import {useMint} from "@/lib/hooks/use-mint";
 import {useEffect} from "react";
+import {Icons} from "@/components/icons";
 
 function ConnectSection() {
     const [githubUser, setGithubUser] = useAtom(githubUserAtom)
@@ -30,7 +31,9 @@ function ConnectSection() {
         mutationKey: ['getMintSign'],
         mutationFn: (data: TDomainRequestBody) => getDomainMintSignApi(data),
         onSuccess: (data) => {
-            console.log(data)
+            const res = data.data;
+            setSignInfo(res);
+            setGithubUser(res?.['user_info']);
         },
         onError: (error) => {
             toast.error(error?.message)
@@ -49,13 +52,13 @@ function ConnectSection() {
         }
     }, [code, nonce, address])
 
-    console.log(nonce, mintSign, isMintSignLoading, isMintSignError, mintSignError);
-
     return (
         <div className="flex-1 px-5 py-3 flex flex-col">
             {address && (
                 <>
-                    <Button className="w-[200px] mt-2 mx-auto" onClick={() => login()}>Github Login</Button>
+                    <Button className="w-[200px] mt-2 mx-auto" onClick={() => login()}>
+                        {isMintSignLoading ? <Icons.loading className="animate-spin w-4 h-4" /> : 'Login with Github'}
+                    </Button>
                     <a className="flex items-center justify-center mt-4 text-xs text-content-muted" href="#"
                        onClick={() => disconnect()}>Disconnect Wallet</a>
                 </>

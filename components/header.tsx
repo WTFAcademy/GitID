@@ -8,7 +8,6 @@ export default function Header() {
         <div className="max-w-3xl mx-auto">
           <div className="relative flex items-center justify-between gap-x-2 h-[60px] px-3">
             <div className="flex-1">
-              {/* Logo */}
               <Link href="/">
                 <svg xmlns="http://www.w3.org/2000/svg" width={32} height={32}>
                   <path
@@ -22,7 +21,6 @@ export default function Header() {
                 </svg>
               </Link>
             </div>
-            {/* Navigation links */}
             <Link href="/lookup" className="flex-[2]">
               <div className="w-full flex items-center gap-2 border border-solid border-[#A5B4FC7A] py-1 px-4 rounded-lg">
                 <svg
@@ -40,8 +38,6 @@ export default function Header() {
                 <span className="text-[#9CA3AF]">Search</span>
               </div>
             </Link>
-
-            {/* Light switch */}
             <ThemeToggle />
           </div>
         </div>

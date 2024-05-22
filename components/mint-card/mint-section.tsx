@@ -23,7 +23,7 @@ const MintSection = () => {
                 <h2 className="text-[32px] font-bold mb-6">{signInfo?.['name']}.git</h2>
                 <div className="relative flex-col text-center w-full p-4 border border-solid border-[#A5B4FC7A] rounded-lg">
                     <h2 className="text-[#6B7280CC] text-xs mb-1">Transaction</h2>
-                    <Link href={`https://etherscan.io/tx/${hash}`} className="text-[#4F46E5] w-full text-center">
+                    <Link href={`https://sepolia.etherscan.io/tx/${hash}`} className="text-[#4F46E5] w-full text-center">
                         {truncate(hash!, 10)}
                     </Link>
                 </div>
